@@ -1,15 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import './Home.scss';
+import { observer } from 'mobx-react';
+import { useStores } from '../stores';
 
-function Home() {
+const Home = observer(() => {
+  const { UserStore } = useStores();
+  console.log('home', UserStore)
+  // const User = () => <div>Hello {UserStore.currentUser.attribures.username} </div>
   return (
     <>
-        <h1>Home</h1>
-        <Link to="/about">关于</Link>
-        <div class="home"><span class="a">a</span></div>
+    {
+      UserStore.currentUser ? <>
+        Hello {UserStore.currentUser.attributes.username} 
+      </> :<>
+      用户未登录
+      </>
+    } 
     </>
   );
-}
+});
 
 export default Home;
