@@ -33,7 +33,7 @@ const StyledLink=styled(NavLink)`
 
 const  Component = observer(() => {
   const history = useHistory();
-  const { UserStore, AuthStore } = useStores();
+  const { UserStore, AuthStore,HistoryStore } = useStores();
   // console.log(UserStore)
   const handleLogin = () => {
     console.log('跳转到登录页面')
@@ -41,6 +41,7 @@ const  Component = observer(() => {
   };
   const handleLogout = () => {
     AuthStore.logout();
+    HistoryStore.reset();
   };
   const handleRegister = () => {
     console.log('跳转到注册页面')
@@ -63,9 +64,8 @@ const  Component = observer(() => {
           <StyledLink to="/about" activeClassName="active">关于</StyledLink>
         </nav>
         <Login>
-        
         {
-          UserStore.currentUser && UserStore.currentUser.attributes ? <>
+          UserStore.currentUser ? <>
             {UserStore.currentUser.attributes.username} <StyleButton type="primary" onClick={handleLogout}>注销</StyleButton>
           </> :<>
           <StyleButton type="primary" onClick={handleLogin}>登录</StyleButton>
