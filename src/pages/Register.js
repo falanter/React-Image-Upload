@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button, message} from 'antd';
 import styled from 'styled-components';
 import { useStores } from '../stores';
 import { useHistory } from 'react-router-dom';
@@ -45,16 +45,18 @@ const Component = () => {
     AuthStore.setPassword(values.password);
     AuthStore.register()
       .then(() => {
-        console.log('注册成功, 跳转到首页')
+        // console.log('注册成功, 跳转到首页')
+        message.success('注册成功');
         history.push('/')
       }).catch(() => {
-        console.log('登录失败，什么都不做')
+        // console.log('注册失败，什么都不做')
+        message.warning('注册失败');
       });
   };
 
-  const onFinishFailed = errorInfo => {
-    console.log('Failed:', errorInfo);
-  };
+  // const onFinishFailed = errorInfo => {
+  //   console.log('Failed:', errorInfo);
+  // };
 
   const validateUsername = (rule, value) => {
     if(/\W/.test(value)) return Promise.reject('只能是字母数字下划线');
@@ -78,7 +80,7 @@ const Component = () => {
       {...layout}
       name="basic"
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // onFinishFailed={onFinishFailed}
     >
       <Form.Item
         label="用户名"

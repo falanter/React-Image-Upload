@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Form, Input, Button} from 'antd';
+import { Form, Input, Button, message} from 'antd';
 import { useStores } from '../stores';
 import { useHistory } from 'react-router-dom';
 
@@ -35,22 +35,24 @@ const Component = () => {
   const history = useHistory();
 
   const onFinish = values => {
-    console.log('Success:', values);
+    // console.log('Success:', values);
     AuthStore.setUsername(values.username);
     AuthStore.setPassword(values.password);
     AuthStore.login()
       .then(() => {
-        console.log('登录成功,跳转到首页')
+        // console.log('登录成功,跳转到首页')
+        message.success('登录成功');
         history.push('/');
       }).catch((e)=>{
-        console.log(e)
-        console.log('登录失败')
+        // console.log(e)
+        // console.log('登录失败')
+        message.warning('登录失败');
       })
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
+  // const onFinishFailed = (errorInfo: any) => {
+  //   console.log('Failed:', errorInfo);
+  // };
   const validateUsername = (rule, value) => {
     if(/\W/.test(value)) return Promise.reject('只能是字母数字下划线');
     if(value.length < 4 || value.length > 10) return Promise.reject('长度为4～10个字符');
@@ -65,7 +67,7 @@ const Component = () => {
       name="basic"
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
+      // onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item

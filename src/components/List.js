@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { List, Skeleton, Divider, message} from 'antd';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { observer } from 'mobx-react';
@@ -10,33 +9,37 @@ const Img = styled.img`
   width: 100px;
   height: 120px;
   object-fit: contain;
-  border: 1px solid #eee;
+  // border: 1px solid #eee;
+`;
+const Textname = styled.div`
+  margin:0 20px;
+  overflow：hidden；
+  border:1px solid #ccc;
 `;
 
 const Component = observer(() => {
-    const { HistoryStore, UserStore } = useStores();
-    const history = useHistory();
+  const { HistoryStore, UserStore } = useStores();
   const loadMoreData = () => {
-    console.log(UserStore.currentUser)
+    // console.log(UserStore.currentUser)
     if(HistoryStore.isLoading){
         return;
     }
     HistoryStore.find();
-    console.log(HistoryStore.list);
+    // console.log(HistoryStore.list);
   };
 
   useEffect(() => {
-    console.log('进入组件')
+    // console.log('进入组件')
     if(UserStore.currentUser){
       loadMoreData();
     }else{
       message.warning('请先登录！');
     }
     return () => {
-      console.log('卸载')
+      // console.log('卸载')
       HistoryStore.reset();
     }
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div
@@ -46,6 +49,7 @@ const Component = observer(() => {
         overflow: 'auto',
         padding: '0 16px',
         border: '1px solid rgba(140, 140, 140, 0.35)',
+        borderRadius:5,
       }}
     >
       <InfiniteScroll
@@ -61,11 +65,11 @@ const Component = observer(() => {
               <div>
                 <Img src={item.attributes.url.attributes.url}  />
               </div>
-              <div>
+              <Textname>
                 <h5>{item.attributes.filename}</h5>
-              </div>
+              </Textname>  
               <div>
-                <a  target="_blank" href={item.attributes.url.attributes.url}>{item.attributes.url.attributes.url}</a>
+                <a  target="_blank" rel="noreferrer" href={item.attributes.url.attributes.url}>{item.attributes.url.attributes.url}</a>
               </div>
             </List.Item>
           }

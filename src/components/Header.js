@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import LogoUrl from './logo.svg';
 import styled from 'styled-components';
-import {Button} from 'antd';
+import {Button, message} from 'antd';
 import { useStores } from '../stores';
 import { observer } from 'mobx-react';
 
@@ -14,20 +14,27 @@ const Login=styled.div`
 `;
 
 const Header=styled.header`
-  background-color:#02101f;
+  background-color:#343A40;
   padding:10px 100px;
   display:flex;
   align-items:center;
   color:#fff;
 `;
 const Logo=styled.img`
-  height:30px;
+  height:35px;
+  &:hover{
+    cursor:pointer;
+  }
 `;
 const StyledLink=styled(NavLink)`
-  color:#fff;
+  color: rgba(255,255,255,.5);
   margin-left:20px;
+  &:hover{
+    color:rgba(255,255,255,.7);
+  }
   &.active{
-    border-bottom:1px solid #fff;
+    // border-bottom:1px solid #fff;
+    color:#fff;
   }
 `;
 
@@ -36,28 +43,27 @@ const  Component = observer(() => {
   const { UserStore, AuthStore,HistoryStore } = useStores();
   // console.log(UserStore)
   const handleLogin = () => {
-    console.log('跳转到登录页面')
+    // console.log('跳转到登录页面')
     history.push('/login');
   };
   const handleLogout = () => {
     AuthStore.logout();
     HistoryStore.reset();
+    message.success('已注销');
   };
   const handleRegister = () => {
-    console.log('跳转到注册页面')
+    // console.log('跳转到注册页面')
     history.push('/register');
   };
-  const handleTest = () => {
-    console.log('test')
-    history.push('/test');
+  const toHome = () => {
+    history.push('/');
   };
   useEffect(()=>{
     UserStore.pullUser();
-  },[])
+  },[])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Header>
-        <h1>Header</h1>
-        <Logo src={LogoUrl} />
+        <Logo src={LogoUrl} onClick={toHome} />
         <nav>
           <StyledLink to="/" activeClassName="active" exact>首页</StyledLink>
           <StyledLink to="/history" activeClassName="active">上传历史</StyledLink>
@@ -73,7 +79,6 @@ const  Component = observer(() => {
           </>
         }
         </Login>
-        <StyleButton onClick={handleTest}>test</StyleButton>
     </Header>
   );
 });

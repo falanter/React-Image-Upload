@@ -51,8 +51,8 @@ const Component = observer(() => {
   }));
 
   const bindWidthChange = () => {
-    console.log('bindWidthChange...')
-    console.log(ref1.current.value)
+    // console.log('bindWidthChange...')
+    // console.log(ref1.current.value)
     store.setWidth(ref1.current.value);
   };
 
@@ -81,10 +81,12 @@ const Component = observer(() => {
 
       ImageStore.upload()
         .then((serverFile) => {
-          console.log('上传成功')
-          console.log(serverFile);
+          // console.log('上传成功')
+          // console.log(serverFile);
+          message.success('上传成功');
         }).catch(() => {
-          console.log('上传失败')
+          // console.log('上传失败')
+          message.warning('上传失败');
         });
       return false;
     }
@@ -93,7 +95,7 @@ const Component = observer(() => {
     if(!UserStore.currentUser){
       message.warning('请先登录！');
     }
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div>
@@ -113,7 +115,7 @@ const Component = observer(() => {
           <H1>上传结果</H1>
           <dl>
             <dt>线上地址</dt>
-            <dd><a target="_blank" href={ImageStore.serverFile.attributes.url.attributes.url}>{ImageStore.serverFile.attributes.url.attributes.url}</a></dd>
+            <dd><a target="_blank" rel="noreferrer" href={ImageStore.serverFile.attributes.url.attributes.url}>{ImageStore.serverFile.attributes.url.attributes.url}</a></dd>
             <dt>文件名</dt>
             <dd>{ImageStore.filename}</dd>
             <dt>图片预览</dt>
@@ -126,7 +128,7 @@ const Component = observer(() => {
               <input ref={ref2} onChange={bindHeightChange} placeholder="最大高度（可选）" />
             </dd>
             <dd>
-              <a target="_blank" href={store.fullStr}>{store.fullStr}</a>
+              <a target="_blank" rel="noreferrer" href={store.fullStr}>{store.fullStr}</a>
             </dd>
           </dl>
         </Result> : null

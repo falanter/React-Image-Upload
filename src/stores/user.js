@@ -9,7 +9,7 @@ class UserStore {
   @observable currentUser = null;
 
   @action pullUser() {
-    console.log('pull user')
+    // console.log('pull user')
     this.currentUser = Auth.getCurrentUser()
   }
 
